@@ -12,8 +12,8 @@ public class Main {
     }
 
     //Create a Home Screen:
-    public static void homeScreen(){
-        while (true){
+    public static void homeScreen() {
+        while (true) {
             System.out.println("Welcome to the Home Screen:");
             System.out.println("D) Add Deposit ");
             System.out.println("P) Make Payment (Debit) ");
@@ -40,11 +40,24 @@ public class Main {
 
             }
         }
-
+    }
        public static void addDeposit(){
+            System.out.println("Enter Deposit Amount: ");
+            double depositAmount = read.nextDouble();
+            if (depositAmount < 0){
+                System.out.println("Invalid input. Deposit amount must be positive.");
+            }
 
+            read.nextLine();
+
+           System.out.println("Enter description of deposit: ");
+           String depositDescription = read.nextLine();
+           System.out.println("Enter vendor: ");
+           String depositVendor = read.nextLine();
         }
 
-    }
+
+
+
 
 }
