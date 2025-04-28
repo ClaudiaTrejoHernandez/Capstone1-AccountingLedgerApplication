@@ -40,6 +40,11 @@ public class Main {
 
             }
         }
+
+       public static void addDeposit(){
+
+        }
+
     }
 
 }
