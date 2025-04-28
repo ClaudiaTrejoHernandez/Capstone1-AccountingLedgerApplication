@@ -1,17 +1,19 @@
 package com.pluralsight;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 public class TransactionHelper {
 
-    private String date;
-    private String time;
+    private LocalDateTime dateTime;
     private String description;
     private String vendor;
     private double amount;
 
     //Parameterized constructor:
-    public TransactionHelper(String date, String time, String description, String vendor, double amount) {
-        this.date = date;
-        this.time = time;
+    public TransactionHelper(LocalDateTime dateTime, String description, String vendor, double amount) {
+        this.dateTime = dateTime;
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
@@ -19,20 +21,13 @@ public class TransactionHelper {
 
     //Get/Set Methods:
 
-    public String getDate() {
-        return date;
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getDescription() {
@@ -59,5 +54,11 @@ public class TransactionHelper {
         this.amount = amount;
     }
 
-    
+    public String transactionString(){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
+        String date = dateTime.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String time = dateTime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        return date + "|" + time + "|" + description + "|" + vendor + "|" + amount;
+    }
+
 }
