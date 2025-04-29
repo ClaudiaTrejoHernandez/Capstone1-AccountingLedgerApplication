@@ -54,7 +54,6 @@ public class TransactionHelper {
     }
 
     public String transactionString(){
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         String date = dateTime.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String time = dateTime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
         return date + "|" + time + "|" + description + "|" + vendor + "|" + amount;
