@@ -21,7 +21,6 @@ public class TransactionHelper {
 
     //Get/Set Methods:
 
-
     public LocalDateTime getDateTime() {
         return dateTime;
     }
