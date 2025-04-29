@@ -24,7 +24,7 @@ public class Ledger {
         TransactionHelper userTransactions = new TransactionHelper(dateTime, description, vendor, amount);
         transactions.add(userTransactions);
 
-        String transactionString = userTransactions.transactionString();
+        String transactionString = userDeposit.transactionString();
         String filePath = "transactions.csv";
 
         try {
