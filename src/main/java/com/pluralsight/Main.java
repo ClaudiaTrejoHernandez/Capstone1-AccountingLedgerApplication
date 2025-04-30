@@ -130,6 +130,8 @@ public class Main {
                             }
                             break;
                         }
+
+                        break;
                    case "H":
                        System.out.println("Returning to Home Menu\n");
                        return;

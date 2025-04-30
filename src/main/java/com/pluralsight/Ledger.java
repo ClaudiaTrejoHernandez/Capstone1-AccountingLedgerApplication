@@ -145,7 +145,7 @@ public class Ledger {
                 int month = date.getMonthValue();
 
                 if (year == currentYear && month == currentMonth) {
-                    System.out.println(t);
+                    System.out.println(t.transactionString());
                     found = true;
                 }
             }
