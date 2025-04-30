@@ -9,6 +9,7 @@ public class Main {
     public static Ledger ledger = new Ledger();
 
     public static void main(String[] args) {
+        ledger.loadTransactionsCSV();
         homeScreen();
 
     }
@@ -72,16 +73,17 @@ public class Main {
        }
 
        public static void ledgerMenu() {
-           while (true) {
+            while (true) {
                System.out.println("\nLedger Menu\n");
                System.out.println("A) Display All");
                System.out.println("D) Deposits");
                System.out.println("P) Payments");
                System.out.println("R) Reports");
+               System.out.println("H) Return to Home Screen");
                System.out.println("\nPlease type the letter of your command: ");
                String userCommand = read.nextLine().trim().toUpperCase();
 
-               switch (userCommand) {
+                switch (userCommand) {
                    case "A":
                        ledger.displayAll();
                        break;
@@ -92,7 +94,6 @@ public class Main {
                        ledger.displayPayment();
                        break;
                    case "R":
-                       ledger.reports();
                         while (true) {
                             System.out.println("\nReports\n");
                             System.out.println("1) Month To Date");
@@ -127,6 +128,7 @@ public class Main {
                                 default:
                                     System.out.println("Invalid command. Please try again");
                             }
+                            break;
                         }
                    case "H":
                        System.out.println("Returning to Home Menu\n");
