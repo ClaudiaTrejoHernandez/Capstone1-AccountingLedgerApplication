@@ -30,7 +30,7 @@ public class Ledger {
         saveTransaction(deposit);
         transactions.add(deposit);
 
-        System.out.println("Deposit of $" + amount + " was successfully processed.");
+        System.out.println("\nDeposit of $" + amount + " was successfully processed.");
 
     }
 
@@ -45,7 +45,7 @@ public class Ledger {
         saveTransaction(payment);
         transactions.add(payment);
 
-        System.out.println("Payment of $" + Math.abs(amount) + " was successfully processed.\n");
+        System.out.println("\nPayment of $" + Math.abs(amount) + " was successfully processed.\n");
 
     }
 
@@ -68,8 +68,6 @@ public class Ledger {
                 transactions.add(new TransactionHelper(dateTime, description, vendor, amount));
 
             }
-
-            System.out.println("Loaded " + transactions.size() + "transactions from ledger file.");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
