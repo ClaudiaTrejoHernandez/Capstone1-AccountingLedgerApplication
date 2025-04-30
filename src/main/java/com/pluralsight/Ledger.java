@@ -47,21 +47,33 @@ public class Ledger {
     }
 
     public void displayDeposit() {
-        for (TransactionHelper t : transactions) {
-            if (t.getAmount() > 0);
-            System.out.println(t.transactionString());
+        System.out.println("\nDisplaying Deposits:\n");
+        for (int i = transactions.size() - 1; i >= 0; i--) {
+            TransactionHelper t = transactions.get(i);
+
+            if (t.getAmount() > 0) {
+                System.out.println(t.transactionString());
+            }
         }
     }
 
+
     public void displayPayment() {
-        for (TransactionHelper t : transactions) {
-            if (t.getAmount() < 0);
-            System.out.println(t.transactionString());
+        System.out.println("\nDisplaying Payments:\n");
+        for (int i = transactions.size() - 1; i >= 0; i--) {
+            TransactionHelper t = transactions.get(i);
+
+            if (t.getAmount() < 0) {
+                System.out.println(t.transactionString());
+            }
         }
     }
 
     public void displayAll() {
-        for (TransactionHelper t : transactions) {
+        System.out.println("\nAll Transactions\n");
+        for (int i = transactions.size() - 1; i >= 0; i--) {
+            TransactionHelper t = transactions.get(i);
+
             System.out.println(t.transactionString());
         }
     }
@@ -84,4 +96,48 @@ public class Ledger {
             System.out.println("Unexpected error: " + e.getMessage());
         }
     }
+
+    public void monthToDateReport() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime thisMonth = now.withDayOfMonth(1);
+
+        System.out.println("\nMonth-to-Date Report\n");
+
+        boolean found = false;
+        for (TransactionHelper t : transactions) {
+            if (!t.getDateTime().isBefore(thisMonth) && !t.getDateTime().isAfter(now)) {
+                System.out.println(t);
+                found = true;
+            }
+
+            if (!found) {
+                System.out.println("No transactions found for this month.");
+            }
+
+        }
+    }
+
+    public void previousMonthReport() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startOfCurrentMonth = now.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime startOfLastMonth = startOfCurrentMonth.minusMonths(1);
+        LocalDateTime endOfLastMonth = startOfLastMonth.minusSeconds(1);
+
+        System.out.println("\nPrevious Month Report\n");
+
+        boolean found = false;
+        for (TransactionHelper t : transactions) {
+            if (!t.getDateTime().isBefore(startOfLastMonth) && !t.getDateTime().isAfter(endOfLastMonth)) {
+                System.out.println(t);
+                found = true;
+            }
+
+            if (!found) {
+                System.out.println("No transactions found for this month.");
+            }
+
+        }
+    }
+
+
 }
