@@ -91,43 +91,43 @@ public class Main {
                    case "P":
                        ledger.displayPayment();
                        break;
-//                   case "R":
-//                       ledger.reports();
-//                        while (true) {
-//                            System.out.println("\nReports\n");
-//                            System.out.println("1) Month To Date");
-//                            System.out.println("2) Previous Month");
-//                            System.out.println("3) Year To Date");
-//                            System.out.println("4) Previous Year");
-//                            System.out.println("5) Search by Vendor");
-//                            System.out.println("0) Back");
-//                            System.out.println("\nPlease type the number of your command: ");
-//                            int ledgerCommand = read.nextInt();
-//                            read.nextLine();
-//
-//                            switch (ledgerCommand) {
-//                                case 1:
-//                                    ledger.monthToDate();
-//                                    break;
-//                                case 2:
-//                                    ledger.previousMonth();
-//                                    break;
-//                                case 3:
-//                                    ledger.yearToDate();
-//                                    break;
-//                                case 4:
-//                                    ledger.previousYear();
-//                                    break;
-//                                case 5:
-//                                    ledger.searchByVendor();
-//                                    break;
-//                                case 0:
-//                                    System.out.println("Returning to Ledger Menu");
-//                                    return;
-//                                default:
-//                                    System.out.println("Invalid command. Please try again");
-//                            }
-//                        }
+                   case "R":
+                       ledger.reports();
+                        while (true) {
+                            System.out.println("\nReports\n");
+                            System.out.println("1) Month To Date");
+                            System.out.println("2) Previous Month");
+                            System.out.println("3) Year To Date");
+                            System.out.println("4) Previous Year");
+                            System.out.println("5) Search by Vendor");
+                            System.out.println("0) Back");
+                            System.out.println("\nPlease type the number of your command: ");
+                            int ledgerCommand = read.nextInt();
+                            read.nextLine();
+
+                            switch (ledgerCommand) {
+                                case 1:
+                                    ledger.monthToDateReport();
+                                    break;
+                                case 2:
+                                    ledger.previousMonthReport();
+                                    break;
+                                case 3:
+                                    ledger.yearToDateReport();
+                                    break;
+                                case 4:
+                                    ledger.previousYearReport();
+                                    break;
+                                case 5:
+                                    ledger.searchByVendor();
+                                    break;
+                                case 0:
+                                    System.out.println("Returning to Ledger Menu");
+                                    return;
+                                default:
+                                    System.out.println("Invalid command. Please try again");
+                            }
+                        }
                    case "H":
                        System.out.println("Returning to Home Menu\n");
                        return;
