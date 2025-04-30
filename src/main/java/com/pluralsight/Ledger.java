@@ -12,21 +12,21 @@ public class Ledger {
     private static String filePath = "transactions.csv";
 
     //Method to create an array list
-    public Ledger(){
+    public Ledger() {
         transactions = new ArrayList<>();
     }
 
     //Method to add transactions to Array List:
-    public void addDeposit(String description, String vendor, double amount){
+    public void addDeposit(String description, String vendor, double amount) {
 
         if (amount <= 0) {
             System.out.println("Invalid deposit. Deposit amount must be positive.");
             return;
         }
 
-            amount = -Math.abs(amount);
-            TransactionHelper deposit = new TransactionHelper(LocalDateTime.now(), description, vendor, amount);
-            saveTransaction(deposit);
+        amount = -Math.abs(amount);
+        TransactionHelper deposit = new TransactionHelper(LocalDateTime.now(), description, vendor, amount);
+        saveTransaction(deposit);
 
         System.out.println("Deposit of $" + Math.abs(amount) + " was successfully processed.");
 
@@ -81,7 +81,7 @@ public class Ledger {
     //Method to write user input into csv file
     public void saveTransaction(TransactionHelper t) {
         try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filePath));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filePath,true));
             File file = new File(filePath);
 
             if (!file.exists() || file.length() == 0) {
@@ -109,19 +109,19 @@ public class Ledger {
                 System.out.println(t);
                 found = true;
             }
-
+        }
             if (!found) {
                 System.out.println("No transactions found for this month.");
             }
 
-        }
+
     }
 
     public void previousMonthReport() {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startOfCurrentMonth = now.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime startOfCurrentMonth = now.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime startOfLastMonth = startOfCurrentMonth.minusMonths(1);
-        LocalDateTime endOfLastMonth = startOfLastMonth.minusSeconds(1);
+        LocalDateTime endOfLastMonth = startOfLastMonth.minusNanos(1);
 
         System.out.println("\nPrevious Month Report\n");
 
@@ -131,13 +131,53 @@ public class Ledger {
                 System.out.println(t);
                 found = true;
             }
-
+        }
             if (!found) {
-                System.out.println("No transactions found for this month.");
+                System.out.println("No transactions found for the previous month.");
             }
 
-        }
+
     }
 
+    public void yearToDateReport() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime thisYear = now.withDayOfYear(1);
 
+        System.out.println("\nYear-to-Date Report\n");
+
+        boolean found = false;
+        for (TransactionHelper t : transactions) {
+            if (!t.getDateTime().isBefore(thisYear) && !t.getDateTime().isAfter(now)) {
+                System.out.println(t);
+                found = true;
+            }
+        }
+            if (!found) {
+                System.out.println("No transactions found for this year.");
+            }
+
+
+    }
+
+    public void previousYearReport() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startOfCurrentYear = now.withDayOfYear(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime startOfLastYear = startOfCurrentYear.minusYears(1);
+        LocalDateTime endOfLastYear = startOfLastYear.minusNanos(1);
+
+        System.out.println("\nPrevious Year Report\n");
+
+        boolean found = false;
+        for (TransactionHelper t : transactions) {
+            if (!t.getDateTime().isBefore(startOfLastYear) && !t.getDateTime().isAfter(endOfLastYear)) {
+                System.out.println(t);
+                found = true;
+            }
+        }
+
+            if (!found) {
+                System.out.println("No transactions found for the previous year.");
+            }
+
+    }
 }
