@@ -54,7 +54,7 @@ public class TransactionHelper {
     }
 
     public String transactionString(){
-        return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + "|" + description + "|" + vendor + "|" + amount;
+        return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'|'HH:mm:ss")) + "|" + description + "|" + vendor + "|" + amount;
     }
 
 }
