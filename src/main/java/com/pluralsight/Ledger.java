@@ -158,16 +158,31 @@ public class Ledger {
 
         public void previousMonthReport () {
             LocalDateTime now = LocalDateTime.now();
-//            LocalDateTime startOfCurrentMonth = now.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
-            LocalDateTime startOfLastMonth = now.withDayOfMonth(1).minusNanos(1);
-            LocalDateTime endOfLastMonth = now.withDayOfMonth(1).minusNanos(1);
+            int currentYear = now.getYear();
+            int currentMonth = now.getMonthValue();
 
+            int previousYear;
+            int previousMonth;
+
+            if (currentMonth == 1) {
+                previousMonth = 12;
+                previousYear = currentYear -1;
+            } else {
+                previousMonth = currentMonth -1;
+                previousYear = currentYear;
+
+            }
             System.out.println("\nPrevious Month Report\n");
 
             boolean found = false;
+
             for (TransactionHelper t : transactions) {
-                if (!t.getDateTime().isBefore(startOfLastMonth) && !t.getDateTime().isAfter(endOfLastMonth)) {
-                    System.out.println(t);
+                LocalDateTime date = t.getDateTime();
+                int year = date.getYear();
+                int month = date.getMonthValue();
+
+                if (year == previousYear && month == previousMonth) {
+                    System.out.println(t.transactionString());
                     found = true;
                 }
             }
@@ -180,41 +195,57 @@ public class Ledger {
 
         public void yearToDateReport () {
             LocalDateTime now = LocalDateTime.now();
-            LocalDateTime thisYear = now.withDayOfYear(1);
+            int currentYear = now.getYear();
+            int currentMonth = now.getMonthValue();
+            int currentDay = now.getDayOfMonth();
 
-            System.out.println("\nYear-to-Date Report\n");
+                System.out.println("\nYear-to-Date Report\n");
 
-            boolean found = false;
-            for (TransactionHelper t : transactions) {
-                if (!t.getDateTime().isBefore(thisYear) && !t.getDateTime().isAfter(now)) {
-                    System.out.println(t);
-                    found = true;
+                boolean found = false;
+
+                for (TransactionHelper t : transactions) {
+                    LocalDateTime date = t.getDateTime();
+                    int year = date.getYear();
+                    int month = date.getMonthValue();
+                    int day = date.getDayOfMonth();
+
+                    if (year == currentYear) {
+                        if (month < currentMonth) {
+                            System.out.println(t.transactionString());
+                            found = true;
+                        } else if (month == currentMonth && day <= currentDay) {
+                            System.out.println(t.transactionString());
+                            found = true;
+                        }
+                    }
                 }
-            }
-            if (!found) {
-                System.out.println("No transactions found for this year.");
-            }
-
+                if (!found) {
+                    System.out.println("No transactions found for this month.");
+                }
 
         }
 
         public void previousYearReport () {
             LocalDateTime now = LocalDateTime.now();
-            LocalDateTime startOfCurrentYear = now.withDayOfYear(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
-            LocalDateTime startOfLastYear = startOfCurrentYear.minusYears(1);
-            LocalDateTime endOfLastYear = startOfLastYear.minusNanos(1);
+            int currentYear = now.getYear();
+            int previousYear;
 
             System.out.println("\nPrevious Year Report\n");
 
             boolean found = false;
+
             for (TransactionHelper t : transactions) {
-                if (!t.getDateTime().isBefore(startOfLastYear) && !t.getDateTime().isAfter(endOfLastYear)) {
-                    System.out.println(t);
+                LocalDateTime date = t.getDateTime();
+                int year = date.getYear();
+
+                if (year == currentYear - 1) {
+                    System.out.println(t.transactionString());
                     found = true;
                 }
             }
-
-            System.out.println("No transactions found for the previous year.");
+            if (!found) {
+                System.out.println("No transactions found for the previous year.");
+            }
         }
 
 
