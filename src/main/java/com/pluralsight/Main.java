@@ -128,10 +128,8 @@ public class Main {
                                 default:
                                     System.out.println("Invalid command. Please try again");
                             }
-                            break;
                         }
 
-                        break;
                    case "H":
                        System.out.println("Returning to Home Menu\n");
                        return;
