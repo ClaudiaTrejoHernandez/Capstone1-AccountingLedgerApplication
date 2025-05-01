@@ -257,7 +257,7 @@ public class Ledger {
             for (TransactionHelper t : transactions) {
                 if (t.getVendor().toLowerCase().trim().contains(searchVendor)) {
                     if (!found) {
-                        System.out.println("Here's what I found for " + searchVendor + ": ");
+                        System.out.println("\nHere's what I found for " + searchVendor + ": ");
                     }
                     System.out.println(t.transactionString());
                     found = true;
