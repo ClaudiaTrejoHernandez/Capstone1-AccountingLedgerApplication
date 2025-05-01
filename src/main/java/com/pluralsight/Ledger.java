@@ -22,7 +22,7 @@ public class Ledger {
     public void addDeposit(String description, String vendor, double amount) {
 
         if (amount <= 0) {
-            System.out.println("Invalid deposit. Deposit amount must be positive.");
+            System.out.println("\n❌ Invalid deposit. Deposit amount must be positive.\n");
             return;
         }
 
@@ -30,13 +30,13 @@ public class Ledger {
         saveTransaction(deposit);
         transactions.add(deposit);
 
-        System.out.println("\nDeposit of $" + amount + " was successfully processed.");
+        System.out.println("\nDeposit of $" + amount + " was successfully processed.\n");
 
     }
 
     public void addPayment(String description, String vendor, double amount) {
         if (amount <= 0) {
-            System.out.println("Invalid payment. Payment amount must be positive.");
+            System.out.println("\n❌ Invalid payment. Payment amount must be positive.\n");
             return;
         }
 
@@ -52,7 +52,7 @@ public class Ledger {
     public void loadTransactionsCSV() {
         File file = new File("transactions.csv");
         if (!file.exists()) {
-            System.out.println("No transaction file exists. Will begin new empty ledger.");
+            System.out.println("📂 No transaction file exists. 📝 Starting a new empty ledger.\n");
             return;
         }
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -99,7 +99,7 @@ public class Ledger {
         }
 
         public void displayAll () {
-            System.out.println("\nAll Transactions\n");
+            System.out.println("\nAll Transactions:\n");
             for (int i = transactions.size() - 1; i >= 0; i--) {
                 TransactionHelper t = transactions.get(i);
 
@@ -126,7 +126,7 @@ public class Ledger {
 
                 bufferedWriter.close();
             } catch (IOException e) {
-                System.out.println("Unexpected error: " + e.getMessage());
+                System.out.println("\n⚠️ Unexpected error: " + e.getMessage() + " 🛠️\n");
             }
         }
 
@@ -135,7 +135,7 @@ public class Ledger {
             int currentYear = now.getYear();
             int currentMonth = now.getMonthValue();
 
-            System.out.println("\nMonth-to-Date Report\n");
+            System.out.println("\n📑 Month-to-Date Report\n");
 
             boolean found = false;
 
@@ -150,7 +150,7 @@ public class Ledger {
                 }
             }
             if (!found) {
-                System.out.println("No transactions found for this month.");
+                System.out.println("\nNo transactions found for this month.");
             }
 
 
@@ -172,7 +172,7 @@ public class Ledger {
                 previousYear = currentYear;
 
             }
-            System.out.println("\nPrevious Month Report\n");
+            System.out.println("\n📑 Previous Month Report\n");
 
             boolean found = false;
 
@@ -187,7 +187,7 @@ public class Ledger {
                 }
             }
             if (!found) {
-                System.out.println("No transactions found for the previous month.");
+                System.out.println("\nNo transactions found for the previous month.\n");
             }
 
 
@@ -199,7 +199,7 @@ public class Ledger {
             int currentMonth = now.getMonthValue();
             int currentDay = now.getDayOfMonth();
 
-                System.out.println("\nYear-to-Date Report\n");
+                System.out.println("\n📑 Year-to-Date Report\n");
 
                 boolean found = false;
 
@@ -220,7 +220,7 @@ public class Ledger {
                     }
                 }
                 if (!found) {
-                    System.out.println("No transactions found for this month.");
+                    System.out.println("\nNo transactions found for the current year-to-date.\n");
                 }
 
         }
@@ -230,7 +230,7 @@ public class Ledger {
             int currentYear = now.getYear();
             int previousYear;
 
-            System.out.println("\nPrevious Year Report\n");
+            System.out.println("\n📑 Previous Year Report\n");
 
             boolean found = false;
 
@@ -244,31 +244,30 @@ public class Ledger {
                 }
             }
             if (!found) {
-                System.out.println("No transactions found for the previous year.");
+                System.out.println("\nNo transactions found for the previous year.\n");
             }
         }
 
 
         public void searchByVendor () {
-            System.out.println("Enter the vendor name you're looking for: ");
+            System.out.println("Enter the name of the vendor you're looking for: ");
             String searchVendor = read.nextLine().trim().toLowerCase();
 
             boolean found = false;
             for (TransactionHelper t : transactions) {
                 if (t.getVendor().toLowerCase().trim().contains(searchVendor)) {
                     if (!found) {
-                        System.out.println("\nHere's what I found for " + searchVendor + ": ");
+                        System.out.println("\nHere's what I found for " + searchVendor + ": \n");
                     }
                     System.out.println(t.transactionString());
                     found = true;
-
-                }
-
-                if (!found){
-                    System.out.println("No vendors found by that name.");
-                }
-
+                    }
             }
+                if (!found){
+                    System.out.println("\nNo transactions found by the name: " + searchVendor + "\n");
+                }
+
+
         }
 
 }
