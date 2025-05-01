@@ -2,6 +2,7 @@
 
 ## 📖 Description ✏️
 This is an application that can be used to track all financial transactions for a business or for personal use. It has features such as showing several screens (Home, Ledger, and Reports screens), that allow users to input their own information that will be stored in an accounting ledger.
+
 ## ✅ Features
   - **📒 Home Screen:**    
     - **Add Deposit:** Prompts user for deposit information
@@ -25,3 +26,10 @@ This is an application that can be used to track all financial transactions for 
    
 ## 🖥️ Application Screens ☑
 ![Capstone1Screenshot](https://github.com/user-attachments/assets/6215cd85-7f85-488c-b91b-aeea192a3f89)
+
+## 📗 Ledger Example 📜
+![Capstone1LedgerInput](https://github.com/user-attachments/assets/3d508349-91ba-4edd-9dbc-330a014f486a)
+
+## 👩‍💻 An interesting piece of code 🔢
+
+
