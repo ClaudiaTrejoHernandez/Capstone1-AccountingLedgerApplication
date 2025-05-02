@@ -2,7 +2,6 @@ package com.pluralsight;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class TransactionHelper {
 
@@ -33,6 +32,7 @@ public class TransactionHelper {
         return amount;
     }
 
+    //Set method: formats the string of the transaction being printed on csv or display
     public String transactionString(){
         return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + "|" + description + "|" + vendor + "|" + amount;
     }

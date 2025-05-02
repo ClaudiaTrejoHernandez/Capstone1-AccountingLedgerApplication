@@ -9,11 +9,11 @@ import java.util.Scanner;
 
 public class Ledger {
 
-    public static Scanner read = new Scanner(System.in);
+    public static Scanner read = new Scanner(System.in);    //Global Scanner
 
-    private List<TransactionHelper> transactions;
+    private List<TransactionHelper> transactions;       //List that will be used to store all transactions imputed and saved
 
-    //Method to create an array list
+    //Method to create an empty array list for transactions
     public Ledger() {
         transactions = new ArrayList<>();
     }
@@ -21,51 +21,54 @@ public class Ledger {
     //Method to add transactions to Array List:
     public void addDeposit(String description, String vendor, double amount) {
 
-        if (amount <= 0) {
+        if (amount <= 0) {      //Makes sure deposit amount is positive
             System.out.println("\n❌ Invalid deposit. Deposit amount must be positive.\n");
             return;
         }
 
+        //Creating new transaction with the time it was imputed
         TransactionHelper deposit = new TransactionHelper(LocalDateTime.now(), description, vendor, amount);
-        saveTransaction(deposit);
-        transactions.add(deposit);
+        saveTransaction(deposit);       //Calling method to save the transaction to csv file
+        transactions.add(deposit);      //Adding deposit to the list
 
         System.out.println("\nDeposit of $" + amount + " was successfully processed.\n");
 
     }
 
+    //Method to add payment (turns input into a negative amount)
     public void addPayment(String description, String vendor, double amount) {
-        if (amount <= 0) {
+        if (amount <= 0) {      //Making sure that payment is positive (app will make payments negative)
             System.out.println("\n❌ Invalid payment. Payment amount must be positive.\n");
             return;
         }
 
-        amount = -Math.abs(amount);
+        amount = -Math.abs(amount);     //Turns that user input into a negative amount (to simulate a 'withdrawl')
         TransactionHelper payment = new TransactionHelper(LocalDateTime.now(), description, vendor, amount);
-        saveTransaction(payment);
-        transactions.add(payment);
+        saveTransaction(payment);       //Calling method to save the transaction to the csv file
+        transactions.add(payment);      //Adding payment to the list
 
         System.out.println("\nPayment of $" + Math.abs(amount) + " was successfully processed.\n");
 
     }
 
+    //Method to load transactions saved in the csv file into the list
     public void loadTransactionsCSV() {
-        File file = new File("transactions.csv");
-        if (!file.exists()) {
+        File file = new File("transactions.csv");       //Making the file object for the csv
+        if (!file.exists()) {       //If file does not exist, skip loading and make a new file:
             System.out.println("📂 No transaction file exists. 📝 Starting a new empty ledger.\n");
             return;
         }
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line = reader.readLine();
+            String line = reader.readLine();        //Skips the header line while reading file (if it exists)
 
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|", -1);
-                LocalDateTime dateTime = LocalDateTime.parse(parts[0]);
+            while ((line = reader.readLine()) != null) {        //Reads each line (that is not empty)
+                String[] parts = line.split("\\|", -1);     //Splitting each line by the pipe '|'
+                LocalDateTime dateTime = LocalDateTime.parse(parts[0]);     //Parsing the date
                 String description = parts[1];
                 String vendor = parts[2];
                 double amount = Double.parseDouble(parts[3]);
 
-                transactions.add(new TransactionHelper(dateTime, description, vendor, amount));
+                transactions.add(new TransactionHelper(dateTime, description, vendor, amount));     //Adding each transaction
 
             }
 
@@ -74,10 +77,10 @@ public class Ledger {
         }
     }
 
-
+        //Displays all deposits (positive amounts)
         public void displayDeposit () {
             System.out.println("\nDisplaying Deposits:\n");
-            for (int i = transactions.size() - 1; i >= 0; i--) {
+            for (int i = transactions.size() - 1; i >= 0; i--) {        //Print out every transaction from most recent to oldest
                 TransactionHelper t = transactions.get(i);
 
                 if (t.getAmount() > 0) {
@@ -86,10 +89,10 @@ public class Ledger {
             }
         }
 
-
+        //Displays all deposits (negative amounts)
         public void displayPayment () {
             System.out.println("\nDisplaying Payments:\n");
-            for (int i = transactions.size() - 1; i >= 0; i--) {
+            for (int i = transactions.size() - 1; i >= 0; i--) {        //Print out every transaction from most recent to oldest
                 TransactionHelper t = transactions.get(i);
 
                 if (t.getAmount() < 0) {
@@ -98,6 +101,7 @@ public class Ledger {
             }
         }
 
+        //Method to display all transactions
         public void displayAll () {
             System.out.println("\nAll Transactions:\n");
             for (int i = transactions.size() - 1; i >= 0; i--) {
@@ -107,29 +111,32 @@ public class Ledger {
             }
         }
 
-        //Method to write user input into csv file
+        //Method to save user input into csv file
         public void saveTransaction (TransactionHelper t){
 
             String filePath = "transactions.csv";
             File file = new File(filePath);
-            boolean newFile = !file.exists() || file.length() == 0;
+            boolean newFile = !file.exists() || file.length() == 0;     //Checking if file is new or empty:
             try {
-                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));       //Making sure to append ('ture' = do append) to the file (append makes sure to add to the existing file instead of overwriting what's already been saved inside the file)
 
+                //If the file is new (empty), write this following header
                 if (newFile) {
                     bufferedWriter.write("date|time|description|vendor|amount");
                     bufferedWriter.newLine();
                 }
 
-                bufferedWriter.write(t.transactionString());
+                bufferedWriter.write(t.transactionString());        //Write the transaction line
                 bufferedWriter.newLine();
 
-                bufferedWriter.close();
+                bufferedWriter.close();     //Close to ensure the data was saved into the file
+
             } catch (IOException e) {
                 System.out.println("\n⚠️ Unexpected error: " + e.getMessage() + " 🛠️\n");
             }
         }
 
+        //Method to displa transactions for the current month
         public void monthToDateReport () {
             LocalDateTime now = LocalDateTime.now();
             int currentYear = now.getYear();
@@ -156,6 +163,7 @@ public class Ledger {
 
         }
 
+        //Method to display transactions from the previous month
         public void previousMonthReport () {
             LocalDateTime now = LocalDateTime.now();
             int currentYear = now.getYear();
@@ -164,11 +172,11 @@ public class Ledger {
             int previousYear;
             int previousMonth;
 
-            if (currentMonth == 1) {
+            if (currentMonth == 1) {        //If it is currently January, then the previous month is December (12)
                 previousMonth = 12;
-                previousYear = currentYear -1;
+                previousYear = currentYear -1;      //Takes into account that the previous year could be 12 AND a year before; so the 'previous year' is the 'current year' - 1
             } else {
-                previousMonth = currentMonth -1;
+                previousMonth = currentMonth -1;        //Takes into account that the previous month could be in the same year so the 'previous year' IS the 'current month'
                 previousYear = currentYear;
 
             }
@@ -193,6 +201,7 @@ public class Ledger {
 
         }
 
+        //Method to display transactions from the beginning of the year up to this current day
         public void yearToDateReport () {
             LocalDateTime now = LocalDateTime.now();
             int currentYear = now.getYear();
@@ -225,6 +234,7 @@ public class Ledger {
 
         }
 
+        //Method to display all transactions from the previous year
         public void previousYearReport () {
             LocalDateTime now = LocalDateTime.now();
             int currentYear = now.getYear();
@@ -248,7 +258,7 @@ public class Ledger {
             }
         }
 
-
+        //Method to look for vendors by vendor name inputed from vendor
         public void searchByVendor () {
             System.out.println("Enter the name of the vendor you're looking for: ");
             String searchVendor = read.nextLine().trim().toLowerCase();
