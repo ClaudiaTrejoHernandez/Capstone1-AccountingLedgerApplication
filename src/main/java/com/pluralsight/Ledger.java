@@ -238,7 +238,6 @@ public class Ledger {
         public void previousYearReport () {
             LocalDateTime now = LocalDateTime.now();
             int currentYear = now.getYear();
-            int previousYear;
 
             System.out.println("\n📑 Previous Year Report\n");
 
