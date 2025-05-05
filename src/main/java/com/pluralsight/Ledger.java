@@ -260,7 +260,7 @@ public class Ledger {
         //Method to look for vendors by vendor name inputed from vendor
         public void searchByVendor () {
             System.out.println("Enter the name of the vendor you're looking for: ");
-            String searchVendor = read.nextLine().trim().toLowerCase();
+            String searchVendor = read.nextLine().toLowerCase();
 
             boolean found = false;
             for (TransactionHelper t : transactions) {
